@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.google.transit:gtfs-realtime-bindings:0.0.4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.transit/gtfs-realtime-bindings/0.0.4/2b372fb3a069ea3ec40efa32cd188ec44fb81f3c/gtfs-realtime-bindings-0.0.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.transit/gtfs-realtime-bindings/0.0.4/750eea803b5f686e2eeb723151a5aac323721eb7/gtfs-realtime-bindings-0.0.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
