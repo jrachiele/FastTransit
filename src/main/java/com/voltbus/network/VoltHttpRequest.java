@@ -10,15 +10,15 @@ import java.net.URI;
 /**
  * Created by jacob on 2/15/16.
  */
-public class SpringHttpRequest implements Request {
+public class VoltHttpRequest implements Request {
 
     private final ClientHttpRequest request;
     private final URI uri;
     private final HttpMethod method;
     private final ClientHttpRequestFactory requestFactory;
 
-    public SpringHttpRequest(URI uri, HttpMethod method,
-                             ClientHttpRequestFactory requestFactory) throws IOException {
+    public VoltHttpRequest(URI uri, HttpMethod method,
+                           ClientHttpRequestFactory requestFactory) throws IOException {
         this.uri = uri;
         this.method = method;
         this.requestFactory = requestFactory;
@@ -27,10 +27,10 @@ public class SpringHttpRequest implements Request {
 
     @Override
     public Response request() {
-        SpringHttpResponse httpResponse = null;
+        VoltHttpResponse httpResponse = null;
         try {
             ClientHttpResponse clientHttpResponse = request.execute();
-            httpResponse = new SpringHttpResponse(clientHttpResponse);
+            httpResponse = new VoltHttpResponse(clientHttpResponse);
 
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
