@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.net.URI;
 
 /**
- * Created by jacob on 3/9/16.
+ * Created by Jacob Rachiele on 3/9/16.
  */
 public class VoltHttpResponseSpec {
 

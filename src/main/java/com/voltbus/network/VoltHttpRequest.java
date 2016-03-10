@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.net.URI;
 
 /**
- * Created by jacob on 2/15/16.
+ * Created by Jacob Rachiele on 2/15/16.
  */
-public class VoltHttpRequest implements Request {
+public final class VoltHttpRequest implements Request {
 
     private final ClientHttpRequest request;
     private final URI uri;

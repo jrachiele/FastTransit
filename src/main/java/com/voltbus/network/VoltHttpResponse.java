@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * Created by jacob on 2/15/16.
  */
-public class VoltHttpResponse implements Response {
+public final class VoltHttpResponse implements Response {
 
     private final ClientHttpResponse response;
 
