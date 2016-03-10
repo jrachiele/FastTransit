@@ -5,5 +5,5 @@ package com.voltbus.network;
  */
 public interface Request {
 
-    public Response request();
+    Response request();
 }

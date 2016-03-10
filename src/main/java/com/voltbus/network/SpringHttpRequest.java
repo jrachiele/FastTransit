@@ -1,6 +1,7 @@
 package com.voltbus.network;
 
 import org.springframework.http.HttpMethod;
+import org.springframework.http.client.ClientHttpRequest;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpResponse;
 import java.io.IOException;
@@ -11,27 +12,25 @@ import java.net.URI;
  */
 public class SpringHttpRequest implements Request {
 
-    private final VoltClientHttpRequest request;
+    private final ClientHttpRequest request;
     private final URI uri;
     private final HttpMethod method;
     private final ClientHttpRequestFactory requestFactory;
-    private final Response response;
 
-    public SpringHttpRequest(URI uri, HttpMethod method, Response response,
+    public SpringHttpRequest(URI uri, HttpMethod method,
                              ClientHttpRequestFactory requestFactory) throws IOException {
-        this.response = response;
         this.uri = uri;
         this.method = method;
         this.requestFactory = requestFactory;
-        this.request = (VoltClientHttpRequest) requestFactory.createRequest(uri, method);
+        this.request = requestFactory.createRequest(uri, method);
     }
 
     @Override
     public Response request() {
-        SpringClientHttpResponse httpResponse = null;
+        SpringHttpResponse httpResponse = null;
         try {
             ClientHttpResponse clientHttpResponse = request.execute();
-            httpResponse = new SpringClientHttpResponse(clientHttpResponse);
+            httpResponse = new SpringHttpResponse(clientHttpResponse);
 
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
