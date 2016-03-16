@@ -20,11 +20,4 @@ public class SensorDataSpec {
         assertThat(sensorData.key(), is(equalTo(expectedKey)));
     }
 
-    @Test
-    public void testDateTimeStuff() {
-        Instant instant = Instant.now();
-        System.out.println(instant.toString());
-        LocalDateTime dateTime = LocalDateTime.ofInstant(instant, ZoneId.from(ZoneOffset.UTC));
-        System.out.println(dateTime.toString());
-    }
 }

@@ -20,8 +20,7 @@ public class SensorData {
         return new StringBuilder(NAMESPACE).append(":").append(instant).toString();
     }
 
-    String key() {
-        return this.key;
-    }
+    String key() {return this.key;}
+
 
 }
