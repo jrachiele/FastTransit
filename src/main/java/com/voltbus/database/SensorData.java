@@ -22,5 +22,4 @@ public class SensorData {
 
     String key() {return this.key;}
 
-
 }
