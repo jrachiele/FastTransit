@@ -48,9 +48,13 @@ public class GtfsSensorData implements SensorData {
         }
     }
 
-    String key() {return this.key;}
+    String key() {
+        return this.key;
+    }
 
-    byte[] bytesKey() {return this.key.getBytes();}
+    byte[] bytesKey() {
+        return this.key.getBytes();
+    }
 
     public FeedMessage data() {
         return this.data;
