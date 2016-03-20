@@ -43,7 +43,8 @@ public class GtfsSensorData implements SensorData {
         }
         catch (IOException ioe) {
             ioe.printStackTrace();
-            return null;
+            // empty message
+            return FeedMessage.getDefaultInstance();
         }
     }
 
