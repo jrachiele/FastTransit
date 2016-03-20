@@ -22,5 +22,7 @@ public final class VoltHttpResponse implements Response {
 
     public InputStream responseBody() throws IOException {
         return response.getBody();
+
     }
 }
+

@@ -18,11 +18,21 @@ public final class VoltHttpRequest implements Request {
     private final ClientHttpRequestFactory requestFactory;
 
     public VoltHttpRequest(URI uri, HttpMethod method,
-                           ClientHttpRequestFactory requestFactory) throws IOException {
+                           ClientHttpRequestFactory requestFactory) {
         this.uri = uri;
         this.method = method;
         this.requestFactory = requestFactory;
-        this.request = requestFactory.createRequest(uri, method);
+        this.request = createRequest();
+    }
+
+    private ClientHttpRequest createRequest() {
+        try {
+            return requestFactory.createRequest(uri, method);
+        }
+        catch (IOException ioe) {
+            ioe.printStackTrace();
+            return null;
+        }
     }
 
     @Override
