@@ -22,4 +22,6 @@ public class SensorData {
 
     String key() {return this.key;}
 
+    byte[] bytesKey() {return this.key.getBytes();}
+
 }

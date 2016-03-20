@@ -1,3 +1,5 @@
+package com.voltbus.database;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Client;
 
@@ -6,5 +8,6 @@ import redis.clients.jedis.Client;
  */
 public class VoltRedisClient {
 
+    Jedis jedis;
 
 }
