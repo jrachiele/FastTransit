@@ -21,9 +21,9 @@ import java.net.URI;
  */
 public class VoltHttpResponseSpec {
 
-    static URI uri;
-    static HttpMethod method;
-    static ClientHttpRequestFactory requestFactory;
+    private static URI uri;
+    private static HttpMethod method;
+    private static ClientHttpRequestFactory requestFactory;
 
     @BeforeClass
     public static void setUp() {
@@ -33,13 +33,13 @@ public class VoltHttpResponseSpec {
     }
 
     @Test
-    public void whenResponseCreatedThenStatusCodeExists() throws IOException {
+    public void whenResponseCreatedThenStatusCodeExists() {
         Request request = new VoltHttpRequest(uri, method, requestFactory);
         Response response = request.request();
         assertThat(response.statusCode(), is(instanceOf(int.class)));
     }
     @Test
-    public void whenResponseCreatedThenStatusCodeIs200() throws IOException {
+    public void whenResponseCreatedThenStatusCodeIs200() {
         Request request = new VoltHttpRequest(uri, method, requestFactory);
         Response response = request.request();
         assertThat(response.statusCode(), is(equalTo(200)));

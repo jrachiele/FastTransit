@@ -4,7 +4,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequest;
 import org.springframework.http.client.ClientHttpRequestFactory;
-import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -21,7 +20,7 @@ public final class VoltHttpRequest implements Request {
     private final ClientHttpRequestFactory requestFactory;
 
     public VoltHttpRequest(URI uri, HttpMethod method,
-                           ClientHttpRequestFactory requestFactory) {
+                    ClientHttpRequestFactory requestFactory) {
         this.uri = uri;
         this.method = method;
         this.requestFactory = requestFactory;
@@ -31,8 +30,7 @@ public final class VoltHttpRequest implements Request {
     private ClientHttpRequest createRequest() {
         try {
             return requestFactory.createRequest(uri, method);
-        }
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
             ioe.printStackTrace();
             return null;
         }
@@ -40,17 +38,10 @@ public final class VoltHttpRequest implements Request {
 
     @Override
     public Response request() {
-        VoltHttpResponse httpResponse = null;
-        try {
-            RestTemplate restTemplate = new RestTemplate(requestFactory);
-            ResponseEntity<byte[]> responseEntity = restTemplate.getForEntity(uri, byte[].class);
-            ClientHttpResponse clientHttpResponse = request.execute();
-            httpResponse = new VoltHttpResponse(responseEntity);
+        RestTemplate restTemplate = new RestTemplate(requestFactory);
+        ResponseEntity<byte[]> responseEntity = restTemplate.getForEntity(uri, byte[].class);
+        VoltHttpResponse httpResponse = new VoltHttpResponse(responseEntity);
 
-        } catch (IOException ioe) {
-            System.out.println(ioe.getMessage());
-            ioe.printStackTrace();
-        }
         return httpResponse;
     }
 }

@@ -25,16 +25,16 @@ import static org.hamcrest.Matchers.is;
  */
 public class GtfsSensorDataSpec {
 
-    static URI source;
-    static URI sink;
-    static HttpMethod method;
-    static ClientHttpRequestFactory requestFactory;
-    static GtfsRealtime.FeedMessage feed;
-    static Request request;
-    static Response response;
-    static byte[] rawData;
-    static VoltBinaryRedis voltBinaryRedis;
-    static GtfsSensorData sensorData;
+    private static URI source;
+    private static URI sink;
+    private static HttpMethod method;
+    private static ClientHttpRequestFactory requestFactory;
+    private static GtfsRealtime.FeedMessage feed;
+    private static Request request;
+    private static Response response;
+    private static byte[] rawData;
+    private static VoltBinaryRedis voltBinaryRedis;
+    private static GtfsSensorData sensorData;
 
 
     @BeforeClass
