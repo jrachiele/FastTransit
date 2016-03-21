@@ -3,7 +3,6 @@ package com.voltbus.database;
 import java.io.IOException;
 import java.net.URI;
 import java.time.Instant;
-import java.util.Set;
 
 import com.google.transit.realtime.GtfsRealtime.FeedMessage;
 import com.voltbus.network.Request;
@@ -32,7 +31,7 @@ class GtfsSensorData  {
                 source, new SimpleClientHttpRequestFactory(), byte[].class);
         Response response = request.request();
         data = retrieveData(response);
-        vbRedis = new VoltBinaryRedis(destination);
+        vbRedis = new VoltBinaryRedis(destination, 15);
         this.key = NAMESPACE;
         vbRedis.zadd(bytesKey(), timestamp, data.toByteArray());
     }

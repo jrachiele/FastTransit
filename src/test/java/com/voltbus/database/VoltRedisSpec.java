@@ -14,7 +14,7 @@ public class VoltRedisSpec {
 
     @Test
     public void whenObjectCreatedThenConnectionToRedisEstablished() {
-        VoltBinaryRedis redisClient = new VoltBinaryRedis(URI.create("http://localhost:6379"));
+        VoltBinaryRedis redisClient = new VoltBinaryRedis(URI.create("http://localhost:6379"), 15);
         assertTrue(redisClient.isConnected());
     }
 

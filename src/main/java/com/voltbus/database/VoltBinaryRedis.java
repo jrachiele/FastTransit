@@ -1,8 +1,6 @@
 package com.voltbus.database;
 
 import redis.clients.jedis.BinaryJedis;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.Client;
 
 import java.net.URI;
 import java.util.Set;
@@ -14,8 +12,9 @@ public class VoltBinaryRedis {
 
     private final BinaryJedis jedis;
 
-    public VoltBinaryRedis(URI host) {
+    public VoltBinaryRedis(URI host, int db) {
         this.jedis = new BinaryJedis(host);
+        this.jedis.select(db);
         this.jedis.connect();
     }
 
@@ -49,5 +48,9 @@ public class VoltBinaryRedis {
 
     public Set<byte[]> zrange(byte[] key, long start, long end) {
         return jedis.zrange(key, start, end);
+    }
+
+    public Double zscore(byte[] key, byte[] member) {
+        return jedis.zscore(key, member);
     }
 }
