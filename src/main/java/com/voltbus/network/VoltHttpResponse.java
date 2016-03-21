@@ -1,5 +1,6 @@
 package com.voltbus.network;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpResponse;
 
 import java.io.IOException;
@@ -10,17 +11,17 @@ import java.io.InputStream;
  */
 public final class VoltHttpResponse implements Response {
 
-    private final ClientHttpResponse response;
+    private final ResponseEntity<byte[]> response;
 
-    public VoltHttpResponse(ClientHttpResponse response) {
+    public VoltHttpResponse(ResponseEntity<byte[]> response) {
         this.response = response;
     }
 
-    public int statusCode() throws IOException {
-        return response.getRawStatusCode();
+    public int statusCode() {
+        return response.getStatusCode().value();
     }
 
-    public InputStream responseBody() throws IOException {
+    public byte[] responseBody() {
         return response.getBody();
 
     }

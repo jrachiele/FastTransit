@@ -1,9 +1,12 @@
 package com.voltbus.network;
 
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequest;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.web.client.RestTemplate;
+
 import java.io.IOException;
 import java.net.URI;
 
@@ -39,8 +42,10 @@ public final class VoltHttpRequest implements Request {
     public Response request() {
         VoltHttpResponse httpResponse = null;
         try {
+            RestTemplate restTemplate = new RestTemplate(requestFactory);
+            ResponseEntity<byte[]> responseEntity = restTemplate.getForEntity(uri, byte[].class);
             ClientHttpResponse clientHttpResponse = request.execute();
-            httpResponse = new VoltHttpResponse(clientHttpResponse);
+            httpResponse = new VoltHttpResponse(responseEntity);
 
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());

@@ -15,7 +15,7 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 /**
  * Created by jacob on 3/20/16.
  */
-public class GtfsSensorData implements SensorData {
+public class GtfsSensorData  {
 
     private final FeedMessage data;
     private final VoltBinaryRedis vbRedis;

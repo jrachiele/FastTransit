@@ -32,7 +32,7 @@ public class GtfsSensorDataSpec {
     static GtfsRealtime.FeedMessage feed;
     static Request request;
     static Response response;
-    static InputStream rawData;
+    static byte[] rawData;
     static VoltBinaryRedis voltBinaryRedis;
     static GtfsSensorData sensorData;
 
