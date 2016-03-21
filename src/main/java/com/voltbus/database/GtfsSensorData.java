@@ -28,8 +28,8 @@ class GtfsSensorData  {
 
     private GtfsSensorData(Instant instant, URI source, URI destination) {
         this.timestamp = instant.getEpochSecond();
-        Request request = new VoltHttpRequest(
-                source, new SimpleClientHttpRequestFactory());
+        Request<byte[]> request = new VoltHttpRequest<>(
+                source, new SimpleClientHttpRequestFactory(), byte[].class);
         Response response = request.request();
         data = retrieveData(response);
         vbRedis = new VoltBinaryRedis(destination);
@@ -56,7 +56,7 @@ class GtfsSensorData  {
         return this.key.getBytes();
     }
 
-    public FeedMessage data() {
+    FeedMessage data() {
         return this.data;
     }
 

@@ -26,14 +26,14 @@ public class VoltHttpResponseSpec {
 
     @Test
     public void whenResponseCreatedThenStatusCodeExists() {
-        Request request = new VoltHttpRequest(uri, requestFactory);
-        Response response = request.request();
+        Request<byte[]> request = new VoltHttpRequest<>(uri, requestFactory, byte[].class);
+        Response<byte[]> response = request.request();
         assertThat(response.statusCode(), is(instanceOf(int.class)));
     }
     @Test
     public void whenResponseCreatedThenStatusCodeIs200() {
-        Request request = new VoltHttpRequest(uri, requestFactory);
-        Response response = request.request();
+        Request<byte[]> request = new VoltHttpRequest<>(uri, requestFactory, byte[].class);
+        Response<byte[]> response = request.request();
         assertThat(response.statusCode(), is(equalTo(200)));
     }
 }

@@ -27,8 +27,8 @@ public class GtfsSensorDataSpec {
     private static URI sink;
     private static ClientHttpRequestFactory requestFactory;
     private static GtfsRealtime.FeedMessage feed;
-    private static Request request;
-    private static Response response;
+    private static Request<byte[]> request;
+    private static Response<byte[]> response;
     private static byte[] rawData;
     private static VoltBinaryRedis voltBinaryRedis;
     private static GtfsSensorData sensorData;
@@ -39,9 +39,9 @@ public class GtfsSensorDataSpec {
         source = URI.create("https://data.texas.gov/download/eiei-9rpf/application/octet-stream");
         sink = URI.create("http://localhost:6379");
         requestFactory = new SimpleClientHttpRequestFactory();
-        request = new VoltHttpRequest(source, requestFactory);
+        request = new VoltHttpRequest<>(source, requestFactory, byte[].class);
         response = request.request();
-        rawData = (byte[])response.responseBody();
+        rawData = response.responseBody();
 
         voltBinaryRedis = new VoltBinaryRedis(sink);
         voltBinaryRedis.select(0);

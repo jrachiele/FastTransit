@@ -19,8 +19,8 @@ public class VoltHttpRequestSpec {
     public void whenRequestMadeThenResponseReceived() throws IOException {
         URI uri = URI.create("https://data.texas.gov/download/eiei-9rpf/application/octet-stream");
         ClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
-        Request request = new VoltHttpRequest(uri, requestFactory);
-        Response response = request.request();
+        Request<byte[]> request = new VoltHttpRequest<>(uri, requestFactory, byte[].class);
+        Response<byte[]> response = request.request();
         assertThat(response, is(notNullValue()));
     }
 }
