@@ -5,19 +5,21 @@ import org.springframework.http.ResponseEntity;
 /**
  * Created by jacob on 2/15/16.
  */
-final class VoltHttpResponse implements Response {
+final class VoltHttpResponse<T> implements Response {
 
-    private final ResponseEntity<byte[]> response;
+    private final ResponseEntity<T> response;
 
-    VoltHttpResponse(ResponseEntity<byte[]> response) {
+    VoltHttpResponse(ResponseEntity<T> response) {
         this.response = response;
     }
 
+    @Override
     public int statusCode() {
         return response.getStatusCode().value();
     }
 
-    public byte[] responseBody() {
+    @Override
+    public T responseBody() {
         return response.getBody();
 
     }

@@ -9,7 +9,6 @@ import com.google.transit.realtime.GtfsRealtime.FeedMessage;
 import com.voltbus.network.Request;
 import com.voltbus.network.Response;
 import com.voltbus.network.VoltHttpRequest;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 
 /**
@@ -30,7 +29,7 @@ class GtfsSensorData  {
     private GtfsSensorData(Instant instant, URI source, URI destination) {
         this.timestamp = instant.getEpochSecond();
         Request request = new VoltHttpRequest(
-                source, HttpMethod.GET, new SimpleClientHttpRequestFactory());
+                source, new SimpleClientHttpRequestFactory());
         Response response = request.request();
         data = retrieveData(response);
         vbRedis = new VoltBinaryRedis(destination);
@@ -40,7 +39,7 @@ class GtfsSensorData  {
 
     private FeedMessage retrieveData(Response response) {
         try {
-            return FeedMessage.parseFrom(response.responseBody());
+            return FeedMessage.parseFrom((byte[])response.responseBody());
         }
         catch (IOException ioe) {
             ioe.printStackTrace();

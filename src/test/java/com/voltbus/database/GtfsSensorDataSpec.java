@@ -7,11 +7,9 @@ import com.voltbus.network.VoltHttpRequest;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 
-import java.io.InputStream;
 import java.net.URI;
 import java.time.Instant;
 import java.util.Set;
@@ -27,7 +25,6 @@ public class GtfsSensorDataSpec {
 
     private static URI source;
     private static URI sink;
-    private static HttpMethod method;
     private static ClientHttpRequestFactory requestFactory;
     private static GtfsRealtime.FeedMessage feed;
     private static Request request;
@@ -41,11 +38,10 @@ public class GtfsSensorDataSpec {
     public static void setUp() throws Exception {
         source = URI.create("https://data.texas.gov/download/eiei-9rpf/application/octet-stream");
         sink = URI.create("http://localhost:6379");
-        method = HttpMethod.GET;
         requestFactory = new SimpleClientHttpRequestFactory();
-        request = new VoltHttpRequest(source, method, requestFactory);
+        request = new VoltHttpRequest(source, requestFactory);
         response = request.request();
-        rawData = response.responseBody();
+        rawData = (byte[])response.responseBody();
 
         voltBinaryRedis = new VoltBinaryRedis(sink);
         voltBinaryRedis.select(0);
