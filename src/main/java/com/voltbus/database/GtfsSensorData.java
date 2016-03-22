@@ -13,7 +13,7 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 /**
  * Created by jacob on 3/20/16.
  */
-class GtfsSensorData  {
+public class GtfsSensorData  {
 
     private final FeedMessage data;
     private final VoltBinaryRedis vbRedis;
@@ -21,7 +21,7 @@ class GtfsSensorData  {
     private static final String NAMESPACE = "observations";
     private final long timestamp;
 
-    static GtfsSensorData newSensorData(Instant instant, URI source, URI destination) {
+    public static GtfsSensorData newSensorData(Instant instant, URI source, URI destination) {
         return new GtfsSensorData(instant, source, destination);
     }
 
@@ -55,7 +55,7 @@ class GtfsSensorData  {
         return this.key.getBytes();
     }
 
-    FeedMessage data() {
+    public FeedMessage data() {
         return this.data;
     }
 
