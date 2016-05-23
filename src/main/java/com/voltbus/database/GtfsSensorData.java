@@ -3,6 +3,7 @@ package com.voltbus.database;
 import java.io.IOException;
 import java.net.URI;
 import java.time.Instant;
+import java.time.temporal.Temporal;
 
 import com.google.transit.realtime.GtfsRealtime.FeedMessage;
 import com.voltbus.network.Request;
@@ -21,15 +22,14 @@ public class GtfsSensorData  {
     private static final String NAMESPACE = "observations";
     private final long timestamp;
 
-    public static final GtfsSensorData newSensorData(Instant instant, URI source, URI destination,
-    		Request<byte[]> request, RedisClient redisClient) {
-        return new GtfsSensorData(instant, source, destination, request, redisClient);
+    public static final GtfsSensorData newSensorData(Instant instant,
+    		Response<byte[]> response, RedisClient redisClient) {
+        return new GtfsSensorData(instant, response, redisClient);
     }
 
-    private GtfsSensorData(Instant instant, URI source, URI destination,
-    		Request<byte[]> request, RedisClient redisClient) {
+    private GtfsSensorData(Instant instant,
+    		Response<byte[]> response, RedisClient redisClient) {
         this.timestamp = instant.getEpochSecond();
-        Response<byte[]> response = request.request();
         data = retrieveData(response);
         this.redisClient = redisClient;
         this.key = NAMESPACE;

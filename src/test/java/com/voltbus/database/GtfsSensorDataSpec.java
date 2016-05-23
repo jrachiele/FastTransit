@@ -49,8 +49,7 @@ public class GtfsSensorDataSpec {
 
         redisClient = new VoltBinaryRedis(sink, 15);
         Instant instant = Instant.now();
-        sensorData = GtfsSensorData.newSensorData(instant,
-                source, sink, request, redisClient);
+        sensorData = GtfsSensorData.newSensorData(instant, response, redisClient);
         feed = sensorData.data();
     }
 

@@ -1,6 +1,9 @@
 package com.voltbus.database;
 
+import redis.clients.jedis.BasicCommands;
 import redis.clients.jedis.BinaryJedis;
+import redis.clients.jedis.BinaryJedisCommands;
+import redis.clients.jedis.JedisCommands;
 
 import java.net.URI;
 import java.util.Set;
