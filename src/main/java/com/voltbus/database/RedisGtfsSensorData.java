@@ -7,9 +7,8 @@ final class RedisGtfsSensorData {
     private final RedisClient redisClient;
     private final String key;
 	
-	RedisGtfsSensorData(final String namespace, final GtfsSensorData sensorData,
-			final RedisClient redisClient) {
-		this.sensorData = sensorData;
+    RedisGtfsSensorData(final String namespace, final GtfsSensorData sensorData, final RedisClient redisClient) {
+	this.sensorData = sensorData;
         this.redisClient = redisClient;
         this.key = namespace;
         this.redisClient.zadd(bytesKey(), sensorData.timestamp(), 
