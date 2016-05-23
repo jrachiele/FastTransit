@@ -9,17 +9,17 @@ final class VoltHttpResponse<T> implements Response<T> {
 
     private final ResponseEntity<T> response;
 
-    VoltHttpResponse(ResponseEntity<T> response) {
+    VoltHttpResponse(final ResponseEntity<T> response) {
         this.response = response;
     }
 
     @Override
-    public int statusCode() {
+    public final int statusCode() {
         return response.getStatusCode().value();
     }
 
     @Override
-    public T responseBody() {
+    public final T responseBody() {
         return response.getBody();
 
     }

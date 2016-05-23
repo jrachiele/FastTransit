@@ -14,22 +14,21 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 /**
  * Created by jacob on 3/20/16.
  */
-public class GtfsSensorData  {
+final class GtfsSensorData  {
 
     private final FeedMessage data;
     private final long timestamp;
 
-    public static final GtfsSensorData newSensorData(Instant instant, Response<byte[]> response) {
+    static final GtfsSensorData newSensorData(final Instant instant, final Response<byte[]> response) {
         return new GtfsSensorData(instant, response);
     }
 
-    private GtfsSensorData(Instant instant,
-    		Response<byte[]> response) {
+    private GtfsSensorData(final Instant instant, final Response<byte[]> response) {
         this.timestamp = instant.getEpochSecond();
-        data = retrieveData(response);
+        this.data = retrieveData(response);
     }
 
-    private final FeedMessage retrieveData(Response<byte[]> response) {
+    private final FeedMessage retrieveData(final Response<byte[]> response) {
         try {
             return FeedMessage.parseFrom((byte[])response.responseBody());
         }
@@ -40,7 +39,7 @@ public class GtfsSensorData  {
         }
     }
 
-    public final FeedMessage data() {
+    final FeedMessage data() {
         return this.data;
     }
     

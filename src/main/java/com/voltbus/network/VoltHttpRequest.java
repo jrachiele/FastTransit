@@ -15,18 +15,18 @@ public final class VoltHttpRequest<T> implements Request<T> {
     private final URI uri;
     private final ClientHttpRequestFactory requestFactory;
 
-    public VoltHttpRequest(URI uri, ClientHttpRequestFactory requestFactory,
-                           Class<T> type) {
+    public VoltHttpRequest(final URI uri, final ClientHttpRequestFactory requestFactory,
+                           final Class<T> type) {
         this.type = type;
         this.uri = uri;
         this.requestFactory = requestFactory;
     }
 
     @Override
-    public Response<T> request() {
-        RestTemplate restTemplate = new RestTemplate(requestFactory);
-        ResponseEntity<T> responseEntity = restTemplate.getForEntity(uri, type);
-        Response<T> httpResponse = new VoltHttpResponse<>(responseEntity);
+    public final Response<T> request() {
+        final RestTemplate restTemplate = new RestTemplate(requestFactory);
+        final ResponseEntity<T> responseEntity = restTemplate.getForEntity(uri, type);
+        final Response<T> httpResponse = new VoltHttpResponse<>(responseEntity);
 
         return httpResponse;
     }
