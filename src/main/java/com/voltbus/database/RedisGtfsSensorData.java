@@ -3,7 +3,7 @@ package com.voltbus.database;
 final class RedisGtfsSensorData {
 
 	
-	private final GtfsSensorData sensorData;
+    private final GtfsSensorData sensorData;
     private final RedisClient redisClient;
     private final String key;
 	
