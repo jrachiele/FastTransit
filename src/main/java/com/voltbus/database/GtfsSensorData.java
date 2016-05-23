@@ -16,27 +16,27 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 public class GtfsSensorData  {
 
     private final FeedMessage data;
-    private final VoltBinaryRedis vbRedis;
+    private final RedisClient redisClient;
     private final String key;
     private static final String NAMESPACE = "observations";
     private final long timestamp;
 
-    public static GtfsSensorData newSensorData(Instant instant, URI source, URI destination) {
-        return new GtfsSensorData(instant, source, destination);
+    public static final GtfsSensorData newSensorData(Instant instant, URI source, URI destination,
+    		Request<byte[]> request, RedisClient redisClient) {
+        return new GtfsSensorData(instant, source, destination, request, redisClient);
     }
 
-    private GtfsSensorData(Instant instant, URI source, URI destination) {
+    private GtfsSensorData(Instant instant, URI source, URI destination,
+    		Request<byte[]> request, RedisClient redisClient) {
         this.timestamp = instant.getEpochSecond();
-        Request<byte[]> request = new VoltHttpRequest<>(
-                source, new SimpleClientHttpRequestFactory(), byte[].class);
-        Response response = request.request();
+        Response<byte[]> response = request.request();
         data = retrieveData(response);
-        vbRedis = new VoltBinaryRedis(destination, 15);
+        this.redisClient = redisClient;
         this.key = NAMESPACE;
-        vbRedis.zadd(bytesKey(), timestamp, data.toByteArray());
+        this.redisClient.zadd(bytesKey(), timestamp, data.toByteArray());
     }
 
-    private FeedMessage retrieveData(Response response) {
+    private final FeedMessage retrieveData(Response<byte[]> response) {
         try {
             return FeedMessage.parseFrom((byte[])response.responseBody());
         }
@@ -47,15 +47,15 @@ public class GtfsSensorData  {
         }
     }
 
-    String key() {
+    final String key() {
         return this.key;
     }
 
-    byte[] bytesKey() {
+    final byte[] bytesKey() {
         return this.key.getBytes();
     }
 
-    public FeedMessage data() {
+    public final FeedMessage data() {
         return this.data;
     }
 

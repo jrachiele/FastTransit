@@ -1,6 +1,10 @@
 package com.voltbus.database;
 
 import com.google.transit.realtime.GtfsRealtime;
+import com.google.transit.realtime.GtfsRealtime.FeedEntity;
+import com.google.transit.realtime.GtfsRealtime.FeedMessage;
+import com.google.transit.realtime.GtfsRealtime.Position;
+import com.google.transit.realtime.GtfsRealtime.VehiclePosition;
 import com.voltbus.network.Request;
 import com.voltbus.network.Response;
 import com.voltbus.network.VoltHttpRequest;
@@ -30,7 +34,7 @@ public class GtfsSensorDataSpec {
     private static Request<byte[]> request;
     private static Response<byte[]> response;
     private static byte[] rawData;
-    private static VoltBinaryRedis voltBinaryRedis;
+    private static RedisClient redisClient;
     private static GtfsSensorData sensorData;
 
 
@@ -43,17 +47,17 @@ public class GtfsSensorDataSpec {
         response = request.request();
         rawData = response.responseBody();
 
-        voltBinaryRedis = new VoltBinaryRedis(sink, 15);
+        redisClient = new VoltBinaryRedis(sink, 15);
         Instant instant = Instant.now();
         sensorData = GtfsSensorData.newSensorData(instant,
-                source, sink);
+                source, sink, request, redisClient);
         feed = sensorData.data();
     }
 
     @AfterClass
     public static void tearDown() {
-        voltBinaryRedis.flushDB();
-        voltBinaryRedis.quit();
+        redisClient.flushDB();
+        redisClient.quit();
     }
 
     @Test
@@ -65,19 +69,32 @@ public class GtfsSensorDataSpec {
     @Test
     public void whenSensorDataSavedThenStatusCodeOk() throws Exception {
         byte[] key = sensorData.bytesKey();
-        //String status = voltBinaryRedis.set(key, feed.toByteArray());
-        //System.out.println(feed.toString());
-        //assertThat(status, is(equalTo("OK")));
+        String status = redisClient.set(key, feed.toByteArray());
+        System.out.println(feed.toString());
+        assertThat(status, is(equalTo("OK")));
     }
 
     @Test
     public void whenSensorObjectCreatedThenSortedSetStoredProperly() throws Exception {
         byte[] key = sensorData.bytesKey();
-        Set<byte[]> result = voltBinaryRedis.zrange(key, 0, -1);
+        Set<byte[]> result = redisClient.zrange(key, 0, -1);
         for (byte[] bytes : result) {
-            //GtfsRealtime.FeedMessage message = GtfsRealtime.FeedMessage.parseFrom(bytes);
-            System.out.println(voltBinaryRedis.zscore(key, bytes));
+            GtfsRealtime.FeedMessage message = GtfsRealtime.FeedMessage.parseFrom(bytes);
+            System.out.println(message.toString());
+            System.out.println(redisClient.zscore(key, bytes));
         }
+    }
+    
+    @Test
+    public void testGtfsMessage() {
+    	if (feed.getEntityCount() == 0 || feed == null) {
+    		System.out.println("The feed is empty");
+    	}
+    	else {
+    	    FeedEntity entity = feed.getEntity(0);
+    	    VehiclePosition vehPosition = entity.getVehicle();
+    	}
+    	
     }
 
 }
