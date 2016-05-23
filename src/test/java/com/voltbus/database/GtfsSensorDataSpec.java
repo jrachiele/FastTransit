@@ -36,6 +36,7 @@ public class GtfsSensorDataSpec {
     private static byte[] rawData;
     private static RedisClient redisClient;
     private static GtfsSensorData sensorData;
+    private static RedisGtfsSensorData redisSensorData; 
 
 
     @BeforeClass
@@ -49,7 +50,8 @@ public class GtfsSensorDataSpec {
 
         redisClient = new VoltBinaryRedis(sink, 15);
         Instant instant = Instant.now();
-        sensorData = GtfsSensorData.newSensorData(instant, response, redisClient);
+        sensorData = GtfsSensorData.newSensorData(instant, response);
+        redisSensorData = new RedisGtfsSensorData("observations", sensorData, redisClient);
         feed = sensorData.data();
     }
 
@@ -62,12 +64,12 @@ public class GtfsSensorDataSpec {
     @Test
     public void whenObjectCreatedThenKeyEqualsExpectedResult() {
         String expectedKey = "observations";
-        assertThat(sensorData.key(), is(equalTo(expectedKey)));
+        assertThat(redisSensorData.key(), is(equalTo(expectedKey)));
     }
 
     @Test
     public void whenSensorDataSavedThenStatusCodeOk() throws Exception {
-        byte[] key = sensorData.bytesKey();
+        byte[] key = redisSensorData.bytesKey();
         String status = redisClient.set(key, feed.toByteArray());
         System.out.println(feed.toString());
         assertThat(status, is(equalTo("OK")));
@@ -75,7 +77,7 @@ public class GtfsSensorDataSpec {
 
     @Test
     public void whenSensorObjectCreatedThenSortedSetStoredProperly() throws Exception {
-        byte[] key = sensorData.bytesKey();
+        byte[] key = redisSensorData.bytesKey();
         Set<byte[]> result = redisClient.zrange(key, 0, -1);
         for (byte[] bytes : result) {
             GtfsRealtime.FeedMessage message = GtfsRealtime.FeedMessage.parseFrom(bytes);

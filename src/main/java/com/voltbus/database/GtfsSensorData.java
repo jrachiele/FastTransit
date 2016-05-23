@@ -17,23 +17,16 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 public class GtfsSensorData  {
 
     private final FeedMessage data;
-    private final RedisClient redisClient;
-    private final String key;
-    private static final String NAMESPACE = "observations";
     private final long timestamp;
 
-    public static final GtfsSensorData newSensorData(Instant instant,
-    		Response<byte[]> response, RedisClient redisClient) {
-        return new GtfsSensorData(instant, response, redisClient);
+    public static final GtfsSensorData newSensorData(Instant instant, Response<byte[]> response) {
+        return new GtfsSensorData(instant, response);
     }
 
     private GtfsSensorData(Instant instant,
-    		Response<byte[]> response, RedisClient redisClient) {
+    		Response<byte[]> response) {
         this.timestamp = instant.getEpochSecond();
         data = retrieveData(response);
-        this.redisClient = redisClient;
-        this.key = NAMESPACE;
-        this.redisClient.zadd(bytesKey(), timestamp, data.toByteArray());
     }
 
     private final FeedMessage retrieveData(Response<byte[]> response) {
@@ -47,16 +40,12 @@ public class GtfsSensorData  {
         }
     }
 
-    final String key() {
-        return this.key;
-    }
-
-    final byte[] bytesKey() {
-        return this.key.getBytes();
-    }
-
     public final FeedMessage data() {
         return this.data;
+    }
+    
+    final long timestamp() {
+    	return this.timestamp;
     }
 
 }
