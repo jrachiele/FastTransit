@@ -1,11 +1,11 @@
-# velox-bus
+# Velox-bus
 
 Making transit better, one block at a time.
 
 Velox-bus is a work in progress. The goals of the project can be split up into phases, which roughly fit into chronological 
 order but will have some overlap.
 
-### Goals (subject to change)
+### Goals
 #### Phase I 
 * Create highly accurate arrival time predictions at Capital Metro bus stops.
 * Display real-time transit information, including geolocation data, vehicle speed, and statistics related to arrival times and predictions.
@@ -16,9 +16,12 @@ order but will have some overlap.
 * Use increased data availability to provide more refined and advanced metrics.
 
 #### Phase III
-* Expand to other markets outside of Austin. Consider largest markets and markets with poorest public transit service.
+* Expand to other markets outside of Austin.
 * Integrate with other services. The data, metrics, and predictions should be used to improve other services in some way.
 
-### Tools (subject to change)
+### Tools
+The application will be data-driven and thus must have a strong database foundation. Postgresql is certain to play a role, and nosql databases such as redis, cassandra, and mongodb will be looked at when the time is right.
+
+Java and Scala are the anticipated server-side languages.
 
 ### Goal Achievement Plan (rough outline)
