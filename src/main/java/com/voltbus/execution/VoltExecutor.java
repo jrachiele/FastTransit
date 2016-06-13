@@ -1,11 +1,13 @@
 package com.voltbus.execution;
 
+import java.util.concurrent.ExecutorService;
+
 /**
  * Created by jacob on 3/21/16.
  */
 public final class VoltExecutor {
 	
-	private static final double POLLING_INTERVAL = 30.0;
-
+	private ExecutorService executorService;
+	
 
 }
