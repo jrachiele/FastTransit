@@ -2,7 +2,7 @@
 
 Making transit better, one block at a time.
 
-VoltBus is a work in progress. The goals of the project can be split up into phases, which roughly fit into chronological 
+Velox-bus is a work in progress. The goals of the project can be split up into phases, which roughly fit into chronological 
 order but will have some overlap.
 
 ### Goals (subject to change)
