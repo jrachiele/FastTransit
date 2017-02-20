@@ -1,3 +1,3 @@
-#Fast Transit
+#Smooth Transit
 
-Fast Transit is a work in progress.
+Smooth Transit is a work in progress.
